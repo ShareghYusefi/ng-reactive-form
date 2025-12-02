@@ -10,8 +10,18 @@
       aria-describedby="emailHelp"
       formControlName="email"
     />
-    <div id="emailHelp" class="form-text">
-      We'll never share your email with anyone else.
+    <!-- ? stands for optional chaining. It will return undefined if the property dose not exist -->
+    <div
+      *ngIf="email?.errors && email?.invalid && email?.touched"
+      class="text-danger"
+    >
+      <div *ngIf="email?.errors?.['required']">Email is required.</div>
+      <div *ngIf="email?.errors?.['email']">
+        Please use proper email format.
+      </div>
+      <div *ngIf="email?.errors?.['minlength']">
+        Please type a minimum of 5 characters.
+      </div>
     </div>
   </div>
   <div class="mb-3">
@@ -23,13 +33,30 @@
       formControlName="password"
     />
   </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="subscribe" formControlName="subscribe"/>
-    <label class="form-check-label" for="subscribe" 
-      >Subscribe</label
-    >
+  <div
+    *ngIf="password?.errors && password?.invalid && password?.touched"
+    class="text-danger"
+  >
+    <div *ngIf="password?.errors?.['required']">Password is required.</div>
+    <div *ngIf="password?.errors?.['minlength']">
+      Please type a minimum of 5 characters.
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+  <div class="mb-3 form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="subscribe"
+      formControlName="subscribe"
+    />
+    <label class="form-check-label" for="subscribe">Subscribe</label>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    (click)="onSubmit()"
+    [disabled]="loginForm.invalid"
+  >
     Submit
   </button>
 </form>

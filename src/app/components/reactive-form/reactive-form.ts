@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'reactive-form',
@@ -14,10 +14,21 @@ export class ReactiveForm {
   constructor(private formBuilderInstance: FormBuilder) {
     // Create a form group with form controls: email, password, subscribe
     this.loginForm = this.formBuilderInstance.group({
-      email: '',
-      password: '',
+      email: [
+        '',
+        [Validators.email, Validators.required, Validators.minLength(5)],
+      ],
+      password: ['', [Validators.required, Validators.minLength(5)]],
       subscribe: false,
     });
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 
   onSubmit() {
