@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'reactive-form',
@@ -8,11 +8,17 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrl: './reactive-form.css',
 })
 export class ReactiveForm {
-  loginForm: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-    subscribe: new FormControl(false),
-  });
+  loginForm: FormGroup;
+
+  // We can use FormBuilder instance via Dependency injection to create a form group
+  constructor(private formBuilderInstance: FormBuilder) {
+    // Create a form group with form controls: email, password, subscribe
+    this.loginForm = this.formBuilderInstance.group({
+      email: '',
+      password: '',
+      subscribe: false,
+    });
+  }
 
   onSubmit() {
     console.log(this.loginForm.value);
