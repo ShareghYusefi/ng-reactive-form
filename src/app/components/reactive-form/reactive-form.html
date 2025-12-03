@@ -41,6 +41,9 @@
     <div *ngIf="password?.errors?.['minlength']">
       Please type a minimum of 5 characters.
     </div>
+    <div *ngIf="password?.errors?.['avoidWord']">
+      Please avoid using "bug" in password.
+    </div>
   </div>
   <div class="mb-3 form-check">
     <input
